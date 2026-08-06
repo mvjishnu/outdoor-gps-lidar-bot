@@ -1,7 +1,10 @@
 CONTAINER_NAME="humble_container"
 IMAGE_NAME="ros2_humble"
 
-xhost +local:docker
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+xhost +SI:localuser:root >/dev/null
 
 #Check if the container already exists (running or stopped)
 if [ "$(docker ps -a -q -f name=^/${CONTAINER_NAME}$)" ]; then
@@ -19,7 +22,8 @@ else
 		-e DISPLAY=$DISPLAY \
 		-e QT_X11_NO_MITSHM=1 \
 		-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-		-v "$HOME/projects_src/diff_lidar_robot:/root/od_gps_bot/src/diff_lidar_robot" \
+		-v "$PROJECT_ROOT:/root/od_gps_bot" \
+		-w /root/od_gps_bot \
 		$IMAGE_NAME
 fi
 		
