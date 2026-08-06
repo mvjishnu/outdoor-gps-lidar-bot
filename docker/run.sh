@@ -22,7 +22,7 @@ else
 		-e DISPLAY=$DISPLAY \
 		-e QT_X11_NO_MITSHM=1 \
 		-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-		-v "$PROJECT_ROOT:/root/od_gps_bot" \
+		-v "$PROJECT_ROOT/src:/root/od_gps_bot/src" \
 		-w /root/od_gps_bot \
 		$IMAGE_NAME
 fi
