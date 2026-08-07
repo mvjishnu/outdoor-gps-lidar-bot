@@ -147,9 +147,9 @@ local_costmap:
 
         enabled: true
 
-        inflation_radius: 0.4
+        inflation_radius: 0.5
 
-        cost_scaling_factor: 3.0
+        cost_scaling_factor: 2.0
 
 global_costmap:
   global_costmap:
@@ -214,7 +214,7 @@ global_costmap:
 
         inflation_radius: 0.5
 
-        cost_scaling_factor: 3.0
+        cost_scaling_factor: 2.0
 
 behavior_server:
   ros__parameters:
