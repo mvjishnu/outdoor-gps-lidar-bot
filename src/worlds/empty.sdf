@@ -66,7 +66,7 @@
 
       </link>
 
-    </model>
+    <!-- </model>
     <model name="box">
       <static>true</static>
       <pose>2 0 0.5 0 0 0</pose>
@@ -109,7 +109,7 @@
             </sphere>
           </geometry>
         </visual>
-      </link>
+      </link> -->
     </model>
     
     <spherical_coordinates>
