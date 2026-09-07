@@ -112,7 +112,7 @@ def generate_launch_description():
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
-            "/scan/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked",
+            "/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan",
             "/camera/image@sensor_msgs/msg/Image@gz.msgs.Image",
             "/imu@sensor_msgs/msg/Imu@gz.msgs.IMU",
             "/gps@sensor_msgs/msg/NavSatFix@gz.msgs.NavSat",
@@ -259,5 +259,4 @@ def generate_launch_description():
         ),
         goal_pose_bridge,
         rviz,
-        teleop_keyboard,
     ])
