@@ -1,11 +1,8 @@
-ekf_filter_node:
+ekf_global_node:
   ros__parameters:
-
     use_sim_time: true
-
     frequency: 30.0
     sensor_timeout: 0.1
-
     two_d_mode: true
 
     publish_tf: true
@@ -13,17 +10,29 @@ ekf_filter_node:
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
-    world_frame: odom
+    world_frame: map
 
-    odom0: /odom
+    # Local EKF
+    odom0: /odometry/local
     odom0_config: [
-      true, true, false,
+      false, false, false,
       false, false, true,
       true, true, false,
       false, false, true,
       false, false, false
     ]
 
+    # GPS converted to odometry
+    odom1: /odometry/gps
+    odom1_config: [
+      true, true, false,
+      false, false, false,
+      false, false, false,
+      false, false, false,
+      false, false, false
+    ]
+
+    # IMU
     imu0: /imu
     imu0_config: [
       false, false, false,

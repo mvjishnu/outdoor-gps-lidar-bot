@@ -157,7 +157,7 @@ global_costmap:
 
       use_sim_time: true
 
-      global_frame: odom
+      global_frame: map
       robot_base_frame: base_footprint
 
       update_frequency: 2.0
@@ -221,7 +221,7 @@ behavior_server:
 
     use_sim_time: true
 
-    global_frame: odom
+    global_frame: map
     robot_base_frame: base_footprint
 
     cycle_frequency: 10.0
@@ -255,10 +255,10 @@ bt_navigator:
 
     use_sim_time: true
 
-    global_frame: odom
+    global_frame: map
     robot_base_frame: base_footprint
 
-    odom_topic: /odometry/filtered
+    odom_topic: /odometry/local
 
     bt_loop_duration: 10
 
