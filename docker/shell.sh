@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it -w /root humble_container bash
+docker exec -it -w /root odgps_container bash

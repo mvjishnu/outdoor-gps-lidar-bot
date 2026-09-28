@@ -251,7 +251,7 @@ def generate_launch_description():
             actions=[
                 planner_server,
                 controller_server,
-                behavior_server,
+                # behavior_server,
                 bt_navigator,
                 waypoint_follower,
                 lifecycle_manager,
@@ -259,4 +259,5 @@ def generate_launch_description():
         ),
         goal_pose_bridge,
         rviz,
+        # teleop_keyboard,
     ])

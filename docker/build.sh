@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t ros2_humble .
+docker build -t odgps .

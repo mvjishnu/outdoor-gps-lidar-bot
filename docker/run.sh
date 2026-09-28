@@ -1,5 +1,5 @@
-CONTAINER_NAME="humble_container"
-IMAGE_NAME="ros2_humble"
+CONTAINER_NAME="odgps_container"
+IMAGE_NAME="odgps"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
@@ -26,4 +26,3 @@ else
 		-w /root/od_gps_bot \
 		$IMAGE_NAME
 fi
-		
