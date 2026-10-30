@@ -106,7 +106,7 @@ local_costmap:
       height: 10
       resolution: 0.05
 
-      footprint: "[[0.30, 0.20], [0.30, -0.20], [-0.30, -0.20], [-0.30, 0.20]]"
+      footprint: "[[0.35, 0.30], [0.35, -0.30], [-0.35, -0.30], [-0.35, 0.30]]"
 
       always_send_full_costmap: true
 
@@ -130,8 +130,8 @@ local_costmap:
         observation_sources: lidar
 
         lidar:
-          topic: /scan
-          data_type: "LaserScan"
+          topic: /scan/points
+          data_type: "PointCloud2"
 
           marking: true
           clearing: true
@@ -139,15 +139,15 @@ local_costmap:
           obstacle_max_range: 5.0
           raytrace_max_range: 6.0
 
-          min_obstacle_height: 0.2
-          max_obstacle_height: 2.0
+          min_obstacle_height: 0.65
+          max_obstacle_height: 2.15
 
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
 
         enabled: true
 
-        inflation_radius: 0.5
+        inflation_radius: 0.55
 
         cost_scaling_factor: 2.0
 
@@ -177,7 +177,7 @@ global_costmap:
 
       track_unknown_space: true
 
-      footprint: "[[0.30, 0.20], [0.30, -0.20], [-0.30, -0.20], [-0.30, 0.20]]"
+      footprint: "[[0.35, 0.30], [0.35, -0.30], [-0.35, -0.30], [-0.35, 0.30]]"
 
       always_send_full_costmap: true
 
@@ -204,15 +204,15 @@ global_costmap:
           obstacle_max_range: 8.0
           raytrace_max_range: 10.0
 
-          min_obstacle_height: 0.2
-          max_obstacle_height: 2.0
+          min_obstacle_height: 0.65
+          max_obstacle_height: 2.15
 
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
 
         enabled: true
 
-        inflation_radius: 0.5
+        inflation_radius: 0.55
 
         cost_scaling_factor: 2.0
 

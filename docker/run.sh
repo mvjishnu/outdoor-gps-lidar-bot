@@ -1,4 +1,4 @@
-CONTAINER_NAME="humble_container"
+CONTAINER_NAME="odgps_container"
 IMAGE_NAME="ros2_humble"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

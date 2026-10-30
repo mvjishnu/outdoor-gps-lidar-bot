@@ -224,7 +224,7 @@
     <joint name="base_lidar_joint" type="fixed">
         <parent link="base_link"/>
         <child link="lidar_link"/>
-        <origin xyz="0 0 0.225" rpy="0 0 0"/> <!-- 0.2 (chassis height) + 0.025 (half cylinder height) -->
+        <origin xyz="0 0 0.5" rpy="0 0 0"/> <!-- 0.2 (chassis height) + 0.025 (half cylinder height) -->
     </joint>
 
     <joint name="base_left_wheel_joint" type="continuous">
@@ -266,8 +266,8 @@
     </joint>
 
     <gazebo>
-        <plugin filename="gz-sim-diff-drive-system" 
-            name="gz::sim::systems::DiffDrive">
+        <plugin filename="ignition-gazebo-diff-drive-system" 
+            name="ignition::gazebo::systems::DiffDrive">
             <left_joint>base_left_wheel_joint</left_joint>
             <right_joint>base_right_wheel_joint</right_joint>
             <wheel_separation>0.45</wheel_separation>
@@ -292,7 +292,7 @@
 
     <gazebo reference="lidar_link">
         <sensor name="lidar_sensor" type="gpu_lidar">
-            <gz_frame_id>lidar_link</gz_frame_id>
+            <ignition_frame_id>lidar_link</ignition_frame_id>
 
             <pose>0 0 0 0 0 0</pose>
 
@@ -300,24 +300,22 @@
             <visualize>true</visualize>
             <update_rate>10</update_rate>
 
-            <topic>scan</topic>
+            <topic>/scan</topic>
 
-            <output_type>sensor_msgs/LaserScan</output_type>
-
-            <ray>
+            <lidar>
                 <scan>
                     <horizontal>
-                        <samples>720</samples>
+                        <samples>768</samples>
                         <resolution>1</resolution>
                         <min_angle>-3.14159</min_angle>
                         <max_angle>3.14159</max_angle>
                     </horizontal>
 
                     <vertical>
-                        <samples>1</samples>
+                        <samples>32</samples>
                         <resolution>1</resolution>
-                        <min_angle>0</min_angle>
-                        <max_angle>0</max_angle>
+                        <min_angle>-0.261799</min_angle>
+                        <max_angle>0.261799</max_angle>
                     </vertical>
                 </scan>
 
@@ -326,7 +324,7 @@
                     <max>10.0</max>
                     <resolution>0.01</resolution>
                 </range>
-            </ray>
+            </lidar>
 
             <noise>
                 <type>gaussian</type>
@@ -359,13 +357,13 @@
 
     <gazebo reference="imu_link">
         <sensor name="imu_sensor" type="imu">
-            <plugin filename="libignition-gazebo-imu-system.so"
+            <plugin filename="ignition-gazebo-imu-system"
                 name="ignition::gazebo::systems::Imu"/>
             <always_on>true</always_on>
             <update_rate>100</update_rate>
             <visualize>true</visualize>
             <topic>/imu</topic>
-            <gz_frame_id>imu_link</gz_frame_id>
+            <ignition_frame_id>imu_link</ignition_frame_id>
             <imu>
                 <angular_velocity>
                     <x><noise type="gaussian"><mean>0.0</mean><stddev>2e-4</stddev></noise></x>
@@ -383,12 +381,12 @@
 
     <gazebo reference="gps_link">
         <sensor name="gps_sensor" type="navsat">
-            <plugin filename="gz-sim-navsat-system" 
-                    name="gz::sim::systems::NavSat"/>
+            <plugin filename="ignition-gazebo-navsat-system" 
+                    name="ignition::gazebo::systems::NavSat"/>
             <always_on>true</always_on>
             <update_rate>10</update_rate>
             <topic>/gps</topic>
-            <gz_frame_id>gps_link</gz_frame_id>
+            <ignition_frame_id>gps_link</ignition_frame_id>
         </sensor>
     </gazebo>
 
