@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-joint-state-publisher-gui \
     ros-humble-tf2-tools \
     ros-humble-ros-gz \
+    qtwayland5 \
     xterm \
     nano \
  && rm -rf /var/lib/apt/lists/*

@@ -230,7 +230,7 @@ run:
 The main Docker container is:
 
 ```text
-humble_container
+odgps_container
 ```
 
 The ROS 2 workspace inside the container is:
@@ -295,6 +295,16 @@ ros2 launch diff_lidar_robot gazebo.launch.py
 ```
 
 The launch file starts the main simulation and navigation components.
+
+The Docker launcher supports X11/XWayland and native Wayland desktop sessions.
+It uses host DRI graphics when available, enables NVIDIA acceleration only when
+the Docker NVIDIA runtime is installed, and falls back to software rendering
+when no DRI device is present. It sets `IGN_IP=127.0.0.1` so Gazebo Fortress can
+discover the simulator, and builds the workspace on first start when no
+`install/setup.bash` exists. The host still needs Docker and working graphics
+drivers. If switching from X11/XWayland to a native Wayland-only session after
+the container was first created, recreate `odgps_container` so Docker mounts
+the Wayland socket.
 
 You should get:
 

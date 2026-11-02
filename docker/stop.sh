@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker stop humble_container
+docker stop odgps_container
