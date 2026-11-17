@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-humble-pcl-conversions \
     ros-humble-pcl-ros \
     libpcl-dev \
+    qtwayland5 \
     xterm \
     nano \
  && rm -rf /var/lib/apt/lists/*

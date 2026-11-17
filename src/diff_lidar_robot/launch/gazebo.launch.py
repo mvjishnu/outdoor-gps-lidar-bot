@@ -2,7 +2,13 @@
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.actions import TimerAction, DeclareLaunchArgument
+from launch.actions import (
+    DeclareLaunchArgument,
+    ExecuteProcess,
+    RegisterEventHandler,
+    TimerAction,
+)
+from launch.event_handlers import OnProcessExit
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -101,14 +107,18 @@ def generate_launch_description():
         ],
     )
 
-    spawn_robot = Node(
-        package="ros_gz_sim",
-        executable="create",
-        arguments=[
-            "-file",
-            urdf_file,
-            "-name",
-            "diff_lidar",
+    # Gazebo can take 20-60 s to start (especially the first time in a new
+    # container). A single `create` call gives up after a few seconds, so keep
+    # retrying until the robot is really spawned (create exits with 0).
+    spawn_robot = ExecuteProcess(
+        cmd=[
+            "bash",
+            "-c",
+            "trap 'exit 130' INT TERM; "
+            "until ros2 run ros_gz_sim create "
+            f"-file '{urdf_file}' -name diff_lidar; do "
+            "echo 'Gazebo is not ready yet, retrying robot spawn in 3 s...'; "
+            "sleep 3; done",
         ],
         output="screen",
     )
@@ -232,6 +242,20 @@ def generate_launch_description():
         ],
     )
 
+    # Start Nav2 only after the robot has been spawned. If the spawn process
+    # is stopped (Ctrl+C) it exits with a non-zero code, so nothing starts.
+    def start_nav2(event, context):
+        if event.returncode != 0:
+            return []
+        return [
+            planner_server,
+            controller_server,
+            behavior_server,
+            bt_navigator,
+            waypoint_follower,
+            lifecycle_manager,
+        ]
+
     return LaunchDescription([
         use_gps_arg,
         gazebo,
@@ -252,16 +276,11 @@ def generate_launch_description():
                 navsat_transform,
             ],
         ),
-        TimerAction(
-            period=6.0,
-            actions=[
-                planner_server,
-                controller_server,
-                behavior_server,
-                bt_navigator,
-                waypoint_follower,
-                lifecycle_manager,
-            ],
+        RegisterEventHandler(
+            OnProcessExit(
+                target_action=spawn_robot,
+                on_exit=start_nav2,
+            )
         ),
         goal_pose_bridge,
         rviz,

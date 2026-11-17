@@ -291,8 +291,27 @@ run:
 The main Docker container is:
 
 ```text
-humble_container
+odgps_container
 ```
+
+`run.sh` detects your display (X11/XWayland or native Wayland, for example
+Hyprland) and your GPU:
+
+- If the NVIDIA Container Toolkit is installed, the NVIDIA GPU is passed into the container.
+- Otherwise the container uses Mesa (Intel/AMD through `/dev/dri`, or software rendering if there is none).
+
+The first `./run.sh` also builds the workspace automatically. The `build/`, `install/`
+and `log/` folders appear in the repository folder (they are ignored by Git).
+
+Other helper scripts (run them from the `docker` folder):
+
+```bash
+./shell.sh   # open another terminal inside the running container
+./stop.sh    # stop the container
+```
+
+Use `./shell.sh` for extra terminals instead of plain `docker exec`, because it
+sets the display and Gazebo network variables that Gazebo needs.
 
 The ROS 2 workspace inside the container is:
 
@@ -313,7 +332,7 @@ cd ~/od_gps_bot
 Build:
 
 ```bash
-colcon build
+colcon build --symlink-install
 ```
 
 Then source:
@@ -343,7 +362,7 @@ Inside the container:
 
 ```bash
 cd ~/od_gps_bot
-colcon build
+colcon build --symlink-install
 source install/setup.bash
 ```
 
