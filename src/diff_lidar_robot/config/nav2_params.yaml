@@ -118,7 +118,7 @@ local_costmap:
         observation_sources: lidar
 
         lidar:
-          topic: /scan/points
+          topic: /scan/points_filtered
           data_type: "PointCloud2"
           marking: true
           clearing: true
@@ -172,7 +172,7 @@ global_costmap:
         observation_sources: lidar
 
         lidar:
-          topic: /scan/points
+          topic: /scan/points_filtered
           data_type: "PointCloud2"
           marking: true
           clearing: true

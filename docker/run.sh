@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CONTAINER_NAME="humble_container"
 IMAGE_NAME="ros2_humble"
 

@@ -116,7 +116,7 @@ def generate_launch_description():
     bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
-        arguments = [
+        arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
@@ -213,11 +213,23 @@ def generate_launch_description():
         output="screen",
     )
 
+    # Removes the floor and downsamples /scan/points -> /scan/points_filtered.
+    # Heights are in the lidar frame: the lidar is 0.6 m above the ground, so
+    # min_z -0.55 keeps points 5 cm above the floor and max_z 0.9 keeps up to 1.5 m.
     lidar_filtered = Node(
         package="lidar_proc",
         executable="lidar_proc",
-        parameters=[{'use_sim_time': True}],
         output="screen",
+        parameters=[
+            {
+                "use_sim_time": True,
+                "input_topic": "/scan/points",
+                "output_topic": "/scan/points_filtered",
+                "voxel_leaf": 0.05,
+                "min_z": -0.55,
+                "max_z": 0.9,
+            }
+        ],
     )
 
     return LaunchDescription([
@@ -232,6 +244,7 @@ def generate_launch_description():
             ],
         ),
         bridge,
+        lidar_filtered,
         ekf_node,
         TimerAction(
             period=2.0,
@@ -253,8 +266,4 @@ def generate_launch_description():
         goal_pose_bridge,
         rviz,
         teleop_keyboard,
-        TimerAction(
-            period=7.0,
-            actions=[lidar_filtered],
-        ),
     ])
